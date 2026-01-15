@@ -447,14 +447,15 @@
         .toast {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
-            padding: 14px 20px;
+            padding: 18px 28px;
             background: rgba(30, 30, 50, 0.95);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
-            max-width: 400px;
+            max-width: 500px;
             width: 90%;
             pointer-events: auto;
             animation: slideDown 0.3s ease-out;
@@ -507,9 +508,11 @@
         }
 
         .toast-message {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
             line-height: 1.4;
+            text-align: center;
         }
 
         .toast-close {
@@ -759,31 +762,13 @@
         }
 
         // Toast notification system
-        function showToast(message, type = 'error', title = null) {
+        function showToast(message, type = 'error') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
 
-            const icons = {
-                error: '😅',
-                warning: '⚠️',
-                success: '✨',
-                info: 'ℹ️'
-            };
-
-            const defaultTitles = {
-                error: 'อุ๊ปส์!',
-                warning: 'ระวังนะ',
-                success: 'สำเร็จ!',
-                info: 'แจ้งให้ทราบ'
-            };
-
             toast.innerHTML = `
-                <span class="toast-icon">${icons[type] || icons.error}</span>
-                <div class="toast-content">
-                    <div class="toast-title">${title || defaultTitles[type]}</div>
-                    <div class="toast-message">${message}</div>
-                </div>
+                <div class="toast-message">${message}</div>
                 <button class="toast-close" onclick="this.parentElement.classList.add('hiding'); setTimeout(() => this.parentElement.remove(), 250)">✕</button>
             `;
 
@@ -1038,7 +1023,7 @@
                 step = 0;
                 finished = false;
                 drawStep();
-                showToast(feas.why, 'warning', 'เคสนี้เป็นไปไม่ได้');
+                showToast('เคสนี้เป็นไปไม่ได้: ' + feas.why, 'warning');
                 return;
             }
 
@@ -1048,7 +1033,7 @@
                 step = 0;
                 finished = false;
                 drawStep();
-                showToast('จุดเริ่มต้นมีทางออกน้อยกว่า 2 ทาง ปิดวงไม่ได้นะ', 'warning', 'เคสนี้เป็นไปไม่ได้');
+                showToast('เคสนี้เป็นไปไม่ได้: จุดเริ่มต้นมีทางออกน้อยกว่า 2 ทาง', 'warning');
                 return;
             }
 
@@ -1075,7 +1060,7 @@
                     finished = false;
                     drawStep();
                     info.textContent = "";
-                    showToast('ลองเปลี่ยนจุดเริ่มหรือช่องที่ตัดดูนะ อาจจะเป็นไปไม่ได้จริงๆ', 'warning', 'หา cycle ไม่เจอ');
+                    showToast('หา cycle ไม่เจอ ลองเปลี่ยนจุดเริ่มหรือช่องที่ตัด', 'warning');
                     return;
                 }
 
